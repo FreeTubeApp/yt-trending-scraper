@@ -1,0 +1,19 @@
+{
+  "name": "yt-trending-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GilgusMaximus/yt-trending-scraper.git"
+  },
+  "keywords": [],
+  "author": "Luca Hohmann",
+  "license": "GPLv3",
+  "devDependencies": {
+    "axios": "^0.19.2"
+  }
+}
