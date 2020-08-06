@@ -13,7 +13,9 @@
   "keywords": [],
   "author": "Luca Hohmann",
   "license": "GPLv3",
-  "devDependencies": {
-    "axios": "^0.19.2"
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "htmlparser2": "^4.1.0"
   }
 }
