@@ -20,27 +20,23 @@ class YoutubeScraper {
     }
 
     static parse_html(html_data){
-        /*fs.writeFile("./Received_data.html", html_data, (err) =>{
-            if(err){
-                throw err;
+        //Thanks to cadence for the Regex expression
+        const ytInitialData = (html_data.match(/^\s*window\["ytInitialData"\] = (\{.*\});$/m) || [])[1]
+        //TODO Take a look whether a regex that directly filters out the videoRenderers is possible
+        const yt_data_json = JSON.parse(ytInitialData);
+        const video_section_renderers = yt_data_json.contents.
+                                        twoColumnBrowseResultsRenderer.tabs[0].
+                                        tabRenderer.content.sectionListRenderer.contents
+
+        let videoRenderer = []
+        for(let i = 0; i < video_section_renderers.length; i++){
+            if(video_section_renderers.length === 4 && i === 1){
+                continue;
             }
-            console.log("Wrote Data Successfully")
-
-        });*/
-        let html_parsed = cheerio.load(html_data)
-        let extracted_script_tag = html_parsed('script').get()[26].children[0].data
-
-        // debugging purposes
-        fs.writeFile("./test.json", extracted_script_tag, (err) =>{
-            if(err){
-                throw err;
-            }
-            console.log("Wrote Data Successfully")
-
-        });
-        //TODO remove the first part of string up to the first curly open bracket and remove the last parts of the string after the closing curly bracket
-
-        //console.log($)
+            // concatenation of the video renderers, which are not creator on the rise video renderers
+            videoRenderer = [...videoRenderer, ...video_section_renderers[i].itemSectionRenderer.contents[0].shelfRenderer.content.expandedShelfContentsRenderer.items]
+        }
+        console.log(videoRenderer)
     }
 }
 module.exports = YoutubeScraper

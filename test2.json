@@ -1,0 +1,377 @@
+{
+  "compactVideoRenderer": {
+    "videoId": "qaZ0oAh4evU",
+    "thumbnail": {
+      "thumbnails": [
+        {
+          "url": "https://i.ytimg.com/vi/qaZ0oAh4evU/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB\u0026rs=AOn4CLBy_2fDX-5U3YsRdx_8Uf6-Tjgyjw",
+          "width": 168,
+          "height": 94
+        },
+        {
+          "url": "https://i.ytimg.com/vi/qaZ0oAh4evU/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==\u0026rs=AOn4CLChnMr4rM_0tSINdQc8ZQXosqYryw",
+          "width": 336,
+          "height": 188
+        }
+      ]
+    },
+    "title": {
+      "accessibility": {
+        "accessibilityData": {
+          "label": "Alvaro Soler - Sofia by Alvaro Soler 4 years ago 3 minutes, 34 seconds 649,410,563 views"
+        }
+      },
+      "simpleText": "Alvaro Soler - Sofia"
+    },
+    "longBylineText": {
+      "runs": [
+        {
+          "text": "Alvaro Soler",
+          "navigationEndpoint": {
+            "clickTrackingParams": "CGkQpDAYByITCNWMwOCbiesCFasAtwAdCA8Meg==",
+            "commandMetadata": {
+              "webCommandMetadata": {
+                "url": "/channel/UCe24PRI-Jy5sOz0nmYXQMSA",
+                "webPageType": "WEB_PAGE_TYPE_CHANNEL",
+                "rootVe": 3611
+              }
+            },
+            "browseEndpoint": {
+              "browseId": "UCe24PRI-Jy5sOz0nmYXQMSA",
+              "canonicalBaseUrl": "/channel/UCe24PRI-Jy5sOz0nmYXQMSA"
+            }
+          }
+        }
+      ]
+    },
+    "viewCountText": {
+      "simpleText": "Recommended for you"
+    },
+    "lengthText": {
+      "accessibility": {
+        "accessibilityData": {
+          "label": "3 minutes, 34 seconds"
+        }
+      },
+      "simpleText": "3:34"
+    },
+    "navigationEndpoint": {
+      "clickTrackingParams": "CGkQpDAYByITCNWMwOCbiesCFasAtwAdCA8MejIKd2F0Y2gtdnJlY0jZyMPF5P2DypABmgEFCAEQ-B0=",
+      "commandMetadata": {
+        "webCommandMetadata": {
+          "url": "/watch?v=qaZ0oAh4evU",
+          "webPageType": "WEB_PAGE_TYPE_WATCH",
+          "rootVe": 3832
+        }
+      },
+      "watchEndpoint": {
+        "videoId": "qaZ0oAh4evU",
+        "nofollow": true
+      }
+    },
+    "shortBylineText": {
+      "runs": [
+        {
+          "text": "Alvaro Soler",
+          "navigationEndpoint": {
+            "clickTrackingParams": "CGkQpDAYByITCNWMwOCbiesCFasAtwAdCA8Meg==",
+            "commandMetadata": {
+              "webCommandMetadata": {
+                "url": "/channel/UCe24PRI-Jy5sOz0nmYXQMSA",
+                "webPageType": "WEB_PAGE_TYPE_CHANNEL",
+                "rootVe": 3611
+              }
+            },
+            "browseEndpoint": {
+              "browseId": "UCe24PRI-Jy5sOz0nmYXQMSA",
+              "canonicalBaseUrl": "/channel/UCe24PRI-Jy5sOz0nmYXQMSA"
+            }
+          }
+        }
+      ]
+    },
+    "channelThumbnail": {
+      "thumbnails": [
+        {
+          "url": "https://yt3.ggpht.com/a/AATXAJxUDFwVNLcF1eU-8KPoHjGat0XcoUu-E7BNl94RbA=s88-c-k-c0x00ffffff-no-rj",
+          "width": 68,
+          "height": 68
+        }
+      ]
+    },
+    "ownerBadges": [
+      {
+        "metadataBadgeRenderer": {
+          "icon": {
+            "iconType": "OFFICIAL_ARTIST_BADGE"
+          },
+          "style": "BADGE_STYLE_TYPE_VERIFIED_ARTIST",
+          "tooltip": "Official Artist Channel",
+          "trackingParams": "CGkQpDAYByITCNWMwOCbiesCFasAtwAdCA8Meg=="
+        }
+      }
+    ],
+    "trackingParams": "CGkQpDAYByITCNWMwOCbiesCFasAtwAdCA8MekD19eHDgJSd06kB",
+    "channelId": "UCoXZokxZ3jrsgDMHPaEi8pw",
+    "shortViewCountText": {
+      "simpleText": "Recommended for you"
+    },
+    "menu": {
+      "menuRenderer": {
+        "items": [
+          {
+            "menuServiceItemRenderer": {
+              "text": {
+                "runs": [
+                  {
+                    "text": "Add to queue"
+                  }
+                ]
+              },
+              "icon": {
+                "iconType": "ADD_TO_QUEUE_TAIL"
+              },
+              "serviceEndpoint": {
+                "clickTrackingParams": "CGwQ_pgEGAUiEwjVjMDgm4nrAhWrALcAHQgPDHo=",
+                "commandMetadata": {
+                  "webCommandMetadata": {
+                    "url": "/service_ajax",
+                    "sendPost": true
+                  }
+                },
+                "signalServiceEndpoint": {
+                  "signal": "CLIENT_SIGNAL",
+                  "actions": [
+                    {
+                      "clickTrackingParams": "CGwQ_pgEGAUiEwjVjMDgm4nrAhWrALcAHQgPDHo=",
+                      "addToPlaylistCommand": {
+                        "openMiniplayer": false,
+                        "openListPanel": true,
+                        "videoId": "qaZ0oAh4evU",
+                        "listType": "PLAYLIST_EDIT_LIST_TYPE_QUEUE",
+                        "onCreateListCommand": {
+                          "clickTrackingParams": "CGwQ_pgEGAUiEwjVjMDgm4nrAhWrALcAHQgPDHo=",
+                          "commandMetadata": {
+                            "webCommandMetadata": {
+                              "url": "/service_ajax",
+                              "sendPost": true,
+                              "apiUrl": "/youtubei/v1/playlist/create"
+                            }
+                          },
+                          "createPlaylistServiceEndpoint": {
+                            "videoIds": [
+                              "qaZ0oAh4evU"
+                            ],
+                            "params": "CAQ%3D"
+                          }
+                        },
+                        "videoIds": [
+                          "qaZ0oAh4evU"
+                        ]
+                      }
+                    },
+                    {
+                      "clickTrackingParams": "CGwQ_pgEGAUiEwjVjMDgm4nrAhWrALcAHQgPDHo=",
+                      "openPopupAction": {
+                        "popup": {
+                          "notificationActionRenderer": {
+                            "responseText": {
+                              "simpleText": "Added to queue"
+                            },
+                            "trackingParams": "CG0QuWoiEwjVjMDgm4nrAhWrALcAHQgPDHo="
+                          }
+                        },
+                        "popupType": "TOAST"
+                      }
+                    }
+                  ]
+                }
+              },
+              "trackingParams": "CGwQ_pgEGAUiEwjVjMDgm4nrAhWrALcAHQgPDHo="
+            }
+          }
+        ],
+        "trackingParams": "CGkQpDAYByITCNWMwOCbiesCFasAtwAdCA8Meg==",
+        "accessibility": {
+          "accessibilityData": {
+            "label": "Action menu"
+          }
+        }
+      }
+    },
+    "thumbnailOverlays": [
+      {
+        "thumbnailOverlayTimeStatusRenderer": {
+          "text": {
+            "accessibility": {
+              "accessibilityData": {
+                "label": "3 minutes, 34 seconds"
+              }
+            },
+            "simpleText": "3:34"
+          },
+          "style": "DEFAULT"
+        }
+      },
+      {
+        "thumbnailOverlayToggleButtonRenderer": {
+          "isToggled": false,
+          "untoggledIcon": {
+            "iconType": "WATCH_LATER"
+          },
+          "toggledIcon": {
+            "iconType": "CHECK"
+          },
+          "untoggledTooltip": "Watch later",
+          "toggledTooltip": "Added",
+          "untoggledServiceEndpoint": {
+            "clickTrackingParams": "CGsQ-ecDGAIiEwjVjMDgm4nrAhWrALcAHQgPDHo=",
+            "commandMetadata": {
+              "webCommandMetadata": {
+                "url": "/service_ajax",
+                "sendPost": true,
+                "apiUrl": "/youtubei/v1/browse/edit_playlist"
+              }
+            },
+            "playlistEditEndpoint": {
+              "playlistId": "WL",
+              "actions": [
+                {
+                  "addedVideoId": "qaZ0oAh4evU",
+                  "action": "ACTION_ADD_VIDEO"
+                }
+              ]
+            }
+          },
+          "toggledServiceEndpoint": {
+            "clickTrackingParams": "CGsQ-ecDGAIiEwjVjMDgm4nrAhWrALcAHQgPDHo=",
+            "commandMetadata": {
+              "webCommandMetadata": {
+                "url": "/service_ajax",
+                "sendPost": true,
+                "apiUrl": "/youtubei/v1/browse/edit_playlist"
+              }
+            },
+            "playlistEditEndpoint": {
+              "playlistId": "WL",
+              "actions": [
+                {
+                  "action": "ACTION_REMOVE_VIDEO_BY_VIDEO_ID",
+                  "removedVideoId": "qaZ0oAh4evU"
+                }
+              ]
+            }
+          },
+          "untoggledAccessibility": {
+            "accessibilityData": {
+              "label": "Watch later"
+            }
+          },
+          "toggledAccessibility": {
+            "accessibilityData": {
+              "label": "Added"
+            }
+          },
+          "trackingParams": "CGsQ-ecDGAIiEwjVjMDgm4nrAhWrALcAHQgPDHo="
+        }
+      },
+      {
+        "thumbnailOverlayToggleButtonRenderer": {
+          "untoggledIcon": {
+            "iconType": "ADD_TO_QUEUE_TAIL"
+          },
+          "toggledIcon": {
+            "iconType": "PLAYLIST_ADD_CHECK"
+          },
+          "untoggledTooltip": "Add to queue",
+          "toggledTooltip": "Added",
+          "untoggledServiceEndpoint": {
+            "clickTrackingParams": "CGoQx-wEGAMiEwjVjMDgm4nrAhWrALcAHQgPDHo=",
+            "commandMetadata": {
+              "webCommandMetadata": {
+                "url": "/service_ajax",
+                "sendPost": true
+              }
+            },
+            "signalServiceEndpoint": {
+              "signal": "CLIENT_SIGNAL",
+              "actions": [
+                {
+                  "clickTrackingParams": "CGoQx-wEGAMiEwjVjMDgm4nrAhWrALcAHQgPDHo=",
+                  "addToPlaylistCommand": {
+                    "openMiniplayer": false,
+                    "openListPanel": true,
+                    "videoId": "qaZ0oAh4evU",
+                    "listType": "PLAYLIST_EDIT_LIST_TYPE_QUEUE",
+                    "onCreateListCommand": {
+                      "clickTrackingParams": "CGoQx-wEGAMiEwjVjMDgm4nrAhWrALcAHQgPDHo=",
+                      "commandMetadata": {
+                        "webCommandMetadata": {
+                          "url": "/service_ajax",
+                          "sendPost": true,
+                          "apiUrl": "/youtubei/v1/playlist/create"
+                        }
+                      },
+                      "createPlaylistServiceEndpoint": {
+                        "videoIds": [
+                          "qaZ0oAh4evU"
+                        ],
+                        "params": "CAQ%3D"
+                      }
+                    },
+                    "videoIds": [
+                      "qaZ0oAh4evU"
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "untoggledAccessibility": {
+            "accessibilityData": {
+              "label": "Add to queue"
+            }
+          },
+          "toggledAccessibility": {
+            "accessibilityData": {
+              "label": "Added"
+            }
+          },
+          "trackingParams": "CGoQx-wEGAMiEwjVjMDgm4nrAhWrALcAHQgPDHo="
+        }
+      },
+      {
+        "thumbnailOverlayNowPlayingRenderer": {
+          "text": {
+            "runs": [
+              {
+                "text": "Now playing"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "accessibility": {
+      "accessibilityData": {
+        "label": "Alvaro Soler - Sofia - 3 minutes, 34 seconds - Go to channel - AlvaroSolerVEVO - Recommended for you - 4 years ago - play video"
+      }
+    },
+    "richThumbnail": {
+      "movingThumbnailRenderer": {
+        "movingThumbnailDetails": {
+          "thumbnails": [
+            {
+              "url": "https://i.ytimg.com/an_webp/qaZ0oAh4evU/mqdefault_6s.webp?du=3000\u0026sqp=CK6KtfkF\u0026rs=AOn4CLAxPH749wIvyAvXiztBemWsTmmBgg",
+              "width": 320,
+              "height": 180
+            }
+          ],
+          "logAsMovingThumbnail": true
+        },
+        "enableHoveredLogging": true,
+        "enableOverlay": true
+      }
+    }
+  }
+}
