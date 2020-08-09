@@ -65,7 +65,7 @@ class YoutubeScraper {
         };
         //access the relevant field of data an calculate missing values
         video_entry.videoId = videoRenderer.videoId;
-        video_entry.title = videoRenderer.title.runs[0];
+        video_entry.title = videoRenderer.title.runs[0].text;
         video_entry.author = videoRenderer.longBylineText.runs[0].text;
         video_entry.authorId = videoRenderer.ownerText.runs[0].navigationEndpoint.browseEndpoint.browseId;
         video_entry.authorUrl = videoRenderer.longBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url;
