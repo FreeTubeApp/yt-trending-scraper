@@ -1,7 +1,7 @@
 {
   "name": "yt-trending-scraper",
   "version": "1.0.0",
-  "description": "",
+  "description": "Identifies the currently trending videos on YouTube and returns all trending site information about every video without accessing the YouTube API.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,12 +10,20 @@
     "type": "git",
     "url": "https://github.com/GilgusMaximus/yt-trending-scraper.git"
   },
-  "keywords": [],
-  "author": "Luca Hohmann",
+  "keywords": [
+    "youtube",
+    "youtube-fetch",
+    "youtube-scrapper",
+    "youtube-grabber",
+    "youtube trending",
+    "youtube-trending",
+    "youtube without api",
+    "youtube-fetcher",
+    "trending"
+  ],
+  "author": "GilgusMaximus <software@lucahohmann.com>",
   "license": "GPLv3",
   "dependencies": {
-    "axios": "^0.19.2",
-    "cheerio": "^1.0.0-rc.3",
-    "htmlparser2": "^4.1.0"
+    "axios": "^0.19.2"
   }
 }
