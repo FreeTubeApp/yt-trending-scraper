@@ -73,9 +73,12 @@ class YoutubeScraper {
         video_entry.publishedText = videoRenderer.publishedTimeText.simpleText;
         video_entry.published = this.calculate_published(video_entry.publishedText, currentTime);
         video_entry.timeText = videoRenderer.lengthText.simpleText;
-        video_entry.description = videoRenderer.descriptionSnippet.runs[0].text;
         video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
         video_entry.videoThumbnails = this.extract_thumbnail_data(video_entry.videoId);
+        //check whether the property is available, because there can be videos without description which won't have an empty property
+        if(videoRenderer.hasOwnProperty("descriptionSnippet")){
+            video_entry.description = videoRenderer.descriptionSnippet.runs[0].text;
+        }
         return video_entry;
     }
 
