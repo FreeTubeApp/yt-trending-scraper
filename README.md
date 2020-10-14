@@ -13,10 +13,11 @@ If this library should not work at some point, please create an issue and let me
 `const ytrend = require("yt-trending-scraper")`
 
 ## API
-**scrape_trending_page()**
+**scrape_trending_page(_geoLocation_)**
 Returns a list of objects containing all the information of the trending videos.
+geoLocation is an optional parameter to change the country (e.g. JP for Japan) of the trending page.
 ```javascript
-ytrend.scrape_trending_page().then((data) =>{
+ytrend.scrape_trending_page('JP').then((data) =>{
     console.log(data);
 }).catch((error)=>{
     console.log(error);

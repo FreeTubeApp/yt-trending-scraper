@@ -4,8 +4,8 @@ const requester = require("./TrendingRequester")
 class YoutubeScraper {
 
     //starting point
-    static async scrape_trending_page() {
-        const request_data = await requester.requestTrendingPage();
+    static async scrape_trending_page(geoLocation= null) {
+        const request_data = await requester.requestTrendingPage(geoLocation);
         return this.parse_html(request_data.data);
     }
 
