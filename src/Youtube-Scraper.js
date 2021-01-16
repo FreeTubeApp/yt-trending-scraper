@@ -1,85 +1,70 @@
 const requester = require("./TrendingRequester")
 
-
 class YoutubeScraper {
 
     //starting point
     static async scrape_trending_page(geoLocation= null) {
         const request_data = await requester.requestTrendingPage(geoLocation);
-        return this.parse_html(request_data.data);
+        return this.parse_new_html(request_data.data);
     }
 
-    //extract the required JSON object from the HTML data
-    static parse_html(html_data){
-        //TODO Take a look whether a regex that directly filters out the videoRenderers is possible
-        //Thanks to cadence for the Regex expression
-        const ytInitialData = (html_data.match(/^\s*window\["ytInitialData"\] = (\{.*\});$/m) || [])[1];
-
-        //create a JSON object from the JSON string
-        const yt_data_json = JSON.parse(ytInitialData);
-        //extract the video containers
-        const video_section_renderers = yt_data_json.contents.
-                                        twoColumnBrowseResultsRenderer.tabs[0].
-                                        tabRenderer.content.sectionListRenderer.contents;
-
-        let videoRenderer = []
-        for(let i = 0; i < video_section_renderers.length; i++){
-            //check if the creator of the day is available and skip it - at the moment always section 2 and has 4 videos
-            if(video_section_renderers.length === 4 && i === 1){
-                continue;
-            }
-            // concatenation of the video renderers, which are not creator on the rise video renderers
-            videoRenderer = [...videoRenderer, ...video_section_renderers[i].itemSectionRenderer.contents[0].shelfRenderer.content.expandedShelfContentsRenderer.items];
-        }
-
-        // get the current timestamp for calculating the published variable (is in milliseconds)
+    static parse_new_html(html_data) {
+        // matches the special setup of the video elements
+        let jsonContent = '{' + html_data.match(/"sectionListRenderer".+?(},"tab)/)[0]
+        // remove the last chars in order to make it valid JSON
+        jsonContent = jsonContent.substr(0, jsonContent.length-5)
+        const contentArrayJSON = JSON.parse(jsonContent).sectionListRenderer.contents
+        let videos = []
         const current_time = Date.now();
-        let api_output = [];
-
-        videoRenderer.forEach((element) => {
-            api_output.push(this.build_api_output(element.videoRenderer, current_time));
-        });
-        return api_output;
+        contentArrayJSON.forEach((data) => {
+            const videoList = this.build_api_output(data.itemSectionRenderer.contents[0].shelfRenderer.content.expandedShelfContentsRenderer.items, current_time)
+            videos = [...videos, ...videoList]
+        })
+        return videos
     }
-
     //access the one video container and build and object with all the data required
-    static build_api_output(videoRenderer, currentTime){
-        let video_entry = {
-            videoId: -1,
-            title: "",
-            type: "video",
-            author: "",
-            authorId: "",
-            authorUrl: "",
-            videoThumbnails: [],
-            description: "",
-            viewCount: -1,
-            published: -1,
-            publishedText: "",
-            lengthSeconds: -1,
-            liveNow: false,
-            paid: false,
-            premium: false,
-            isUpcoming: false,
-            timeText: ""
-        };
-        //access the relevant field of data an calculate missing values
-        video_entry.videoId = videoRenderer.videoId;
-        video_entry.title = videoRenderer.title.runs[0].text;
-        video_entry.author = videoRenderer.longBylineText.runs[0].text;
-        video_entry.authorId = videoRenderer.ownerText.runs[0].navigationEndpoint.browseEndpoint.browseId;
-        video_entry.authorUrl = videoRenderer.longBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url;
-        video_entry.viewCount = this.calculate_view_count(videoRenderer.viewCountText.simpleText);
-        video_entry.publishedText = videoRenderer.publishedTimeText.simpleText;
-        video_entry.published = this.calculate_published(video_entry.publishedText, currentTime);
-        video_entry.timeText = videoRenderer.lengthText.simpleText;
-        video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
-        video_entry.videoThumbnails = this.extract_thumbnail_data(video_entry.videoId);
-        //check whether the property is available, because there can be videos without description which won't have an empty property
-        if(videoRenderer.hasOwnProperty("descriptionSnippet")){
-            video_entry.description = videoRenderer.descriptionSnippet.runs[0].text;
-        }
-        return video_entry;
+    static build_api_output(videoList, currentTime){
+        const videoEntryList = []
+        videoList.forEach((videoRenderer) => {
+            videoRenderer = videoRenderer.videoRenderer
+            let video_entry = {
+                videoId: -1,
+                title: "",
+                type: "video",
+                author: "",
+                authorId: "",
+                authorUrl: "",
+                videoThumbnails: [],
+                description: "",
+                viewCount: -1,
+                published: -1,
+                publishedText: "",
+                lengthSeconds: -1,
+                liveNow: false,
+                paid: false,
+                premium: false,
+                isUpcoming: false,
+                timeText: ""
+            };
+            //access the relevant field of data an calculate missing values
+            video_entry.videoId = videoRenderer.videoId;
+            video_entry.title = videoRenderer.title.runs[0].text;
+            video_entry.author = videoRenderer.longBylineText.runs[0].text;
+            video_entry.authorId = videoRenderer.ownerText.runs[0].navigationEndpoint.browseEndpoint.browseId;
+            video_entry.authorUrl = videoRenderer.longBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url;
+            video_entry.viewCount = this.calculate_view_count(videoRenderer.viewCountText.simpleText);
+            video_entry.publishedText = videoRenderer.publishedTimeText.simpleText;
+            video_entry.published = this.calculate_published(video_entry.publishedText, currentTime);
+            video_entry.timeText = videoRenderer.lengthText.simpleText;
+            video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
+            video_entry.videoThumbnails = this.extract_thumbnail_data(video_entry.videoId);
+            //check whether the property is available, because there can be videos without description which won't have an empty property
+            if(videoRenderer.hasOwnProperty("descriptionSnippet")){
+                video_entry.description = videoRenderer.descriptionSnippet.runs[0].text;
+            }
+            videoEntryList.push(video_entry);
+        })
+        return videoEntryList
     }
 
     //calculates the length of the video in seconds as a number from the string "hh:mm:ss"
