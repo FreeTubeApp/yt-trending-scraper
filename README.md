@@ -18,7 +18,7 @@ Returns a list of objects containing all the information of the trending videos.
 
 __geoLocation__ is an optional parameter to change the country (e.g. JP for Japan) of the trending page.
 
-__parseCreatorOnRise__ is an optional parameter which allows the parser to process any horizontal video list, which usually is a creator on the rise. But this is not always available. Defaults to **false** 
+__parseCreatorOnRise__ is an optional parameter which allows the parser to process any horizontal video list, which usually is a creator on the rise. But this is not always available, so the scraper will process as usual even when the parameter is set to true. Defaults to **false** 
 ```javascript
 ytrend.scrape_trending_page('JP', true).then((data) =>{
     console.log(data);
