@@ -3,12 +3,12 @@ const requester = require("./TrendingRequester")
 class YoutubeScraper {
 
     //starting point
-    static async scrape_trending_page(geoLocation= null) {
+    static async scrape_trending_page(geoLocation= null, parseCreatorOnRise=false) {
         const request_data = await requester.requestTrendingPage(geoLocation);
-        return this.parse_new_html(request_data.data);
+        return this.parse_new_html(request_data.data, parseCreatorOnRise);
     }
 
-    static parse_new_html(html_data) {
+    static parse_new_html(html_data, parseCreatorOnRise) {
         // matches the special setup of the video elements
         let jsonContent = '{' + html_data.match(/"sectionListRenderer".+?(},"tab)/)[0]
         // remove the last chars in order to make it valid JSON
@@ -17,13 +17,69 @@ class YoutubeScraper {
         let videos = []
         const current_time = Date.now();
         contentArrayJSON.forEach((data) => {
-            const videoList = this.build_api_output(data.itemSectionRenderer.contents[0].shelfRenderer.content.expandedShelfContentsRenderer.items, current_time)
+            const videoList = this.build_api_output(data.itemSectionRenderer.contents[0].shelfRenderer.content, current_time, parseCreatorOnRise)
             videos = [...videos, ...videoList]
         })
         return videos
     }
     //access the one video container and build and object with all the data required
-    static build_api_output(videoList, currentTime){
+    static build_api_output(videoList, currentTime, parseCreatorOnRise){
+        if ('horizontalListRenderer' in videoList && parseCreatorOnRise) {
+            // we have a creator on the rise element with other structure
+            return this.parse_horizontal_video_section(videoList.horizontalListRenderer.items, currentTime)
+        } else if('expandedShelfContentsRenderer' in videoList) {
+            // normal video section
+            return this.parse_normal_video_section(videoList.expandedShelfContentsRenderer.items, currentTime)
+        }
+        return []
+    }
+
+    static parse_horizontal_video_section(videoList, currentTime) {
+        const videoEntryList = []
+        videoList.forEach((videoRenderer) => {
+            videoRenderer = videoRenderer.gridVideoRenderer
+            let video_entry = {
+                videoId: -1,
+                title: "",
+                type: "video",
+                author: "",
+                authorId: "",
+                authorUrl: "",
+                videoThumbnails: [],
+                description: "",
+                viewCount: -1,
+                published: -1,
+                publishedText: "",
+                lengthSeconds: -1,
+                liveNow: false,
+                paid: false,
+                premium: false,
+                isUpcoming: false,
+                timeText: "",
+                isCreatorOnRise: true,
+            };
+
+            video_entry.videoId = videoRenderer.videoId;
+            video_entry.title = videoRenderer.title.runs[0].text;
+            video_entry.author = videoRenderer.shortBylineText.runs[0].text;
+            video_entry.authorId = videoRenderer.shortBylineText.runs[0].navigationEndpoint.browseEndpoint.browseId;
+            video_entry.authorUrl = videoRenderer.shortBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url;
+            video_entry.viewCount = this.calculate_view_count(videoRenderer.viewCountText.simpleText);
+            video_entry.publishedText = videoRenderer.publishedTimeText.simpleText;
+            video_entry.published = this.calculate_published(video_entry.publishedText, currentTime);
+            video_entry.timeText = videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
+            video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
+            video_entry.videoThumbnails = this.extract_thumbnail_data(video_entry.videoId);
+            //check whether the property is available, because there can be videos without description which won't have an empty property
+            if(videoRenderer.hasOwnProperty("descriptionSnippet")){
+                video_entry.description = videoRenderer.descriptionSnippet.runs[0].text;
+            }
+            videoEntryList.push(video_entry);
+        })
+        return videoEntryList
+    }
+
+    static parse_normal_video_section(videoList, currentTime) {
         const videoEntryList = []
         videoList.forEach((videoRenderer) => {
             videoRenderer = videoRenderer.videoRenderer
@@ -44,9 +100,9 @@ class YoutubeScraper {
                 paid: false,
                 premium: false,
                 isUpcoming: false,
-                timeText: ""
+                timeText: "",
+                isCreatorOnRise: false,
             };
-            //access the relevant field of data an calculate missing values
             video_entry.videoId = videoRenderer.videoId;
             video_entry.title = videoRenderer.title.runs[0].text;
             video_entry.author = videoRenderer.longBylineText.runs[0].text;

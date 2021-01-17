@@ -13,11 +13,14 @@ If this library should not work at some point, please create an issue and let me
 `const ytrend = require("yt-trending-scraper")`
 
 ## API
-**scrape_trending_page(_geoLocation_)**
+**scrape_trending_page(_geoLocation_, _parseCreatorOnRise_)**
 Returns a list of objects containing all the information of the trending videos.
-geoLocation is an optional parameter to change the country (e.g. JP for Japan) of the trending page.
+
+__geoLocation__ is an optional parameter to change the country (e.g. JP for Japan) of the trending page.
+
+__parseCreatorOnRise__ is an optional parameter which allows the parser to process any horizontal video list, which usually is a creator on the rise. But this is not always available. Defaults to **false** 
 ```javascript
-ytrend.scrape_trending_page('JP').then((data) =>{
+ytrend.scrape_trending_page('JP', true).then((data) =>{
     console.log(data);
 }).catch((error)=>{
     console.log(error);
@@ -41,7 +44,8 @@ ytrend.scrape_trending_page('JP').then((data) =>{
     liveNow:            false,
     paid:               false,
     premium:            false,
-    isUpcoming:         false
+    isUpcoming:         false,
+    isCreatorOnRise:    Boolean, // indicates whether the video is part of a creator on the rise
 }
 
 // The thumbnail objects:

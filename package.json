@@ -1,6 +1,6 @@
 {
   "name": "yt-trending-scraper",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "Identifies the currently trending videos on YouTube and returns all trending site information about every video without accessing the YouTube API.",
   "main": "index.js",
   "scripts": {
