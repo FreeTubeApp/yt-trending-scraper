@@ -9,7 +9,7 @@ If this library should not work at some point, please create an issue and let me
 ## Installation
 `npm install yt-trending-scraper`
 
-##Usage
+## Usage
 `const ytrend = require("yt-trending-scraper")`
 
 ## API
