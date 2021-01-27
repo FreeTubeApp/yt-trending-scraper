@@ -1,4 +1,4 @@
-# YouTube Trending Videos NodeJS Documentation
+# YouTube Trending Videos Scraper NodeJS Documentation
 This NodeJS library scrapes the trending page of YouTube without any API usage. It is developed for and tailored towards easy usage in the [FreeTube](https://github.com/FreeTubeApp/FreeTube-Vue) rewrite but can be used with any other project as well.
 
 Therefore, this library does not require any API keys, with the attached maximum quotas, but instead might take longer to receive the required data.
