@@ -12,7 +12,6 @@ class TrendingRequester {
         }
         try {
             if (geoLocation !== null) {
-                console.log(trending_page+`?persist_gl=1&gl=${geoLocation}`)
                 return await axios.get(trending_page+`?persist_gl=1&gl=${geoLocation}`, config)
             } else {
                 return await axios.get(trending_page, config)
