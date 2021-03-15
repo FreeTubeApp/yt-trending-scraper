@@ -1,6 +1,6 @@
 {
   "name": "yt-trending-scraper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Identifies the currently trending videos on YouTube and returns all trending site information about every video without accessing the YouTube API.",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,11 @@
     "youtube-trending",
     "youtube without api",
     "youtube-fetcher",
-    "trending"
+    "trending",
+    "youtube trending scraper",
+    "youtube trends scraper",
+    "youtube trends",
+    "trends"
   ],
   "author": "GilgusMaximus <software@lucahohmann.com>",
   "license": "GPLv3",
