@@ -46,6 +46,7 @@ ytrend.scrape_trending_page('JP', true).then((data) =>{
     premium:            false,
     isUpcoming:         false,
     isCreatorOnRise:    Boolean, // indicates whether the video is part of a creator on the rise
+    isVerified:         Boolean,
 }
 
 // The thumbnail objects:

@@ -102,6 +102,7 @@ class YoutubeScraper {
                 isUpcoming: false,
                 timeText: "",
                 isCreatorOnRise: false,
+                isVerified: false
             };
             video_entry.videoId = videoRenderer.videoId;
             video_entry.title = videoRenderer.title.runs[0].text;
@@ -114,6 +115,10 @@ class YoutubeScraper {
             video_entry.timeText = videoRenderer.lengthText.simpleText;
             video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
             video_entry.videoThumbnails = this.extract_thumbnail_data(video_entry.videoId);
+            if ('ownerBadges' in videoRenderer) {
+                video_entry.isVerified = (videoRenderer.ownerBadges[0].metadataBadgeRenderer.tooltip == 'Verified')
+            }
+
             //check whether the property is available, because there can be videos without description which won't have an empty property
             if(videoRenderer.hasOwnProperty("descriptionSnippet")){
                 video_entry.description = videoRenderer.descriptionSnippet.runs[0].text;
