@@ -109,7 +109,7 @@ class YoutubeScraper {
             video_entry.author = videoRenderer.longBylineText.runs[0].text;
             video_entry.authorId = videoRenderer.ownerText.runs[0].navigationEndpoint.browseEndpoint.browseId;
             video_entry.authorUrl = videoRenderer.longBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url;
-            video_entry.viewCount = this.calculate_view_count(videoRenderer.viewCountText.simpleText);
+            video_entry.viewCount = ('viewCountText' in videoRenderer) ? this.calculate_view_count(videoRenderer.viewCountText.simpleText) : 0;
             video_entry.publishedText = videoRenderer.publishedTimeText.simpleText;
             video_entry.published = this.calculate_published(video_entry.publishedText, currentTime);
             video_entry.timeText = videoRenderer.lengthText.simpleText;
