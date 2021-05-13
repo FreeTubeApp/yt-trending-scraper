@@ -1,5 +1,5 @@
 # YouTube Trending Videos Scraper NodeJS Documentation
-This NodeJS library scrapes the trending page of YouTube without any API usage. It is developed for and tailored towards easy usage in the [FreeTube](https://github.com/FreeTubeApp/FreeTube-Vue) rewrite but can be used with any other project as well.
+This NodeJS library can scrape all available trending pages of YouTube without any API usage. It is developed for and tailored towards easy usage in the [FreeTube](https://github.com/FreeTubeApp/FreeTube-Vue) rewrite but can be used with any other project as well.
 
 Therefore, this library does not require any API keys, with the attached maximum quotas, but instead might take longer to receive the required data.
 
@@ -13,14 +13,37 @@ If this library should not work at some point, please create an issue and let me
 `const ytrend = require("yt-trending-scraper")`
 
 ## API
-**scrape_trending_page(_geoLocation_, _parseCreatorOnRise_)**
+**scrape_trending_page(_parameters_)**
 Returns a list of objects containing all the information of the trending videos.
 
+The parameters object can contain the following options:
+
+`
+ geoLocation:           alpha2 Country Code,
+ parseCreatorOnRise:    Boolean
+ page:                  String
+`
 __geoLocation__ is an optional parameter to change the country (e.g. JP for Japan) of the trending page.
 
-__parseCreatorOnRise__ is an optional parameter which allows the parser to process any horizontal video list, which usually is a creator on the rise. But this is not always available, so the scraper will process as usual even when the parameter is set to true. Defaults to **false** 
+__parseCreatorOnRise__ is an optional parameter which allows the parser to process any horizontal video list, which usually is a creator on the rise. But this is not always available, so the scraper will process as usual even when the parameter is set to true. Defaults to **false**
+
+__page__ is an optional parameter which allows to choose one of the 4 trending pages below.
+
+- `default`
+- `music`
+- `gaming`
+- `movies`
+
+### Example usage
+
 ```javascript
-ytrend.scrape_trending_page('JP', true).then((data) =>{
+const parameters = {
+    geoLocation: 'JP',
+    parseCreatorOnRise: false,
+    page: 'music'
+}
+
+ytrend.scrape_trending_page(parameters).then((data) =>{
     console.log(data);
 }).catch((error)=>{
     console.log(error);
