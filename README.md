@@ -19,13 +19,13 @@ Returns a list of objects containing all the information of the trending videos.
 The parameters object can contain the following options:
 
 ``` 
- geoLocation:           alpha2 Country Code,
+ geoLocation:           String,
  parseCreatorOnRise:    Boolean,
  page:                  String
 ```
 
 
-__geoLocation__ is an optional parameter to change the country (e.g. JP for Japan) of the trending page.
+__geoLocation__ is an optional parameter to change the country (e.g. JP for Japan) of the trending page. The alpha2 code of the country must be used
 
 
 __parseCreatorOnRise__ is an optional parameter which allows the parser to process any horizontal video list, which usually is a creator on the rise. But this is not always available, so the scraper will process as usual even when the parameter is set to true. Defaults to **false**
