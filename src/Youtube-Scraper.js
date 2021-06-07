@@ -7,14 +7,16 @@ class YoutubeScraper {
         let geoLocation = null
         let page = 'default'
         let parseCreatorOnRise = false
-        if('geoLocation' in parameters) {
-            geoLocation = parameters.geoLocation
-        }
-        if('page' in parameters) {
-            page = parameters.page
-        }
-        if('parseCreatorOnRise' in parameters) {
-            parseCreatorOnRise = parameters.parseCreatorOnRise
+        if (parameters) {
+            if ('geoLocation' in parameters) {
+                geoLocation = parameters.geoLocation
+            }
+            if ('page' in parameters) {
+                page = parameters.page
+            }
+            if ('parseCreatorOnRise' in parameters) {
+                parseCreatorOnRise = parameters.parseCreatorOnRise
+            }
         }
         const request_data = await requester.requestTrendingPage(geoLocation, page);
         return this.parse_new_html(request_data.data, parseCreatorOnRise);
