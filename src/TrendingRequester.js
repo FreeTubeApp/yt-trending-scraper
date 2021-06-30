@@ -7,7 +7,7 @@ const pageAdditions = {
 }
 
 class TrendingRequester {
-    static async requestTrendingPage(geoLocation = null, page) {
+    static async requestTrendingPage(geoLocation = null, language = null, page) {
         const config = {
             headers: {
                 'x-youtube-client-name': '1',
@@ -20,6 +20,9 @@ class TrendingRequester {
             if (geoLocation !== null) {
                 params['persist_gl'] = 1
                 params['gl'] = geoLocation
+            }
+            if (language !== null) {
+                params['hl'] = language
             }
             if (page !== 'default') {
                 try {

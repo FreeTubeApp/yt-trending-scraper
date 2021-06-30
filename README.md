@@ -21,7 +21,8 @@ The parameters object can contain the following options:
 ``` 
  geoLocation:           String,
  parseCreatorOnRise:    Boolean,
- page:                  String
+ page:                  String,
+ language:              String
 ```
 
 
@@ -38,13 +39,15 @@ __page__ is an optional parameter which allows to choose one of the 4 trending p
 - `gaming`
 - `movies`
 
+__language__ is an optional parameter to change the language (e.g. ja for Japanese) of the trending page. The ISO 639-1 code of the language should be used (although, YouTube also supports some regional dialects like en-US & fr-CA)
 ### Example usage
 
 ```javascript
 const parameters = {
     geoLocation: 'JP',
     parseCreatorOnRise: false,
-    page: 'music'
+    page: 'music',
+    language: 'ja'
 }
 
 ytrend.scrape_trending_page(parameters).then((data) =>{
@@ -74,6 +77,7 @@ ytrend.scrape_trending_page(parameters).then((data) =>{
     isUpcoming:         false,
     isCreatorOnRise:    Boolean, // indicates whether the video is part of a creator on the rise
     isVerified:         Boolean,
+    isVerifiedArtist:   Boolean
 }
 
 // The thumbnail objects:
