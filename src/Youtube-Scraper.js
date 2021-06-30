@@ -119,7 +119,7 @@ class YoutubeScraper {
                 isVerified: false,
                 isVerifiedArtist: false
             };
-            console.log(videoRenderer)
+
             video_entry.videoId = videoRenderer.videoId;
             video_entry.title = videoRenderer.title.runs[0].text;
             video_entry.author = videoRenderer.longBylineText.runs[0].text;
