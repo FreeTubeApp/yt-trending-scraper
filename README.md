@@ -74,6 +74,7 @@ ytrend.scrape_trending_page(parameters).then((data) =>{
     isUpcoming:         false,
     isCreatorOnRise:    Boolean, // indicates whether the video is part of a creator on the rise
     isVerified:         Boolean,
+    isVerifiedArist:    Boolean
 }
 
 // The thumbnail objects:
