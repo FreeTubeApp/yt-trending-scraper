@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll --verbose",
-    "test-ci": "test-ci": "jest --verbose --ci"
+    "test-ci": "jest --verbose --ci"
   },
   "repository": {
     "type": "git",
