@@ -32,9 +32,9 @@
   "author": "GilgusMaximus <software@lucahohmann.com>",
   "license": "GPLv3",
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.27.2"
   },
   "devDependencies": {
-    "jest": "^27.0.4"
+    "jest": "^28.1"
   }
 }
