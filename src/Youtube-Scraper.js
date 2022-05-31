@@ -3,21 +3,7 @@ const requester = require("./TrendingRequester")
 class YoutubeScraper {
 
     //starting point
-    static async scrape_trending_page(parameters) {
-        let geoLocation = null
-        let page = 'default'
-        let parseCreatorOnRise = false
-        if (parameters) {
-            if ('geoLocation' in parameters) {
-                geoLocation = parameters.geoLocation
-            }
-            if ('page' in parameters) {
-                page = parameters.page
-            }
-            if ('parseCreatorOnRise' in parameters) {
-                parseCreatorOnRise = parameters.parseCreatorOnRise
-            }
-        }
+    static async scrape_trending_page({ page = 'default', geoLocation = null, parseCreatorOnRise = false } = {}) {
         const request_data = await requester.requestTrendingPage(geoLocation, page);
         return this.parse_new_html(request_data.data, parseCreatorOnRise);
     }
@@ -26,7 +12,7 @@ class YoutubeScraper {
         // matches the special setup of the video elements
         let jsonContent = '{' + html_data.match(/"sectionListRenderer".+?(},"tab)/)[0]
         // remove the last chars in order to make it valid JSON
-        jsonContent = jsonContent.substr(0, jsonContent.length-5)
+        jsonContent = jsonContent.substring(0, jsonContent.length-5)
         const contentArrayJSON = JSON.parse(jsonContent).sectionListRenderer.contents
         let videos = []
         const current_time = Date.now();
@@ -52,97 +38,74 @@ class YoutubeScraper {
         const videoEntryList = []
         videoList.forEach((videoRenderer) => {
             videoRenderer = videoRenderer.gridVideoRenderer
-            let video_entry = {
-                videoId: -1,
-                title: "",
-                type: "video",
-                author: "",
-                authorId: "",
-                authorUrl: "",
-                videoThumbnails: [],
-                description: "",
-                viewCount: -1,
-                published: -1,
-                publishedText: "",
-                lengthSeconds: -1,
-                liveNow: false,
-                paid: false,
-                premium: false,
-                isUpcoming: false,
-                timeText: "",
-                isCreatorOnRise: true,
-            };
-
-            video_entry.videoId = videoRenderer.videoId;
-            video_entry.title = videoRenderer.title.runs[0].text;
-            video_entry.author = videoRenderer.shortBylineText.runs[0].text;
-            video_entry.authorId = videoRenderer.shortBylineText.runs[0].navigationEndpoint.browseEndpoint.browseId;
-            video_entry.authorUrl = videoRenderer.shortBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url;
-            video_entry.viewCount = this.calculate_view_count(videoRenderer.viewCountText.simpleText);
-            video_entry.publishedText = videoRenderer.publishedTimeText.simpleText;
-            video_entry.published = this.calculate_published(video_entry.publishedText, currentTime);
-            video_entry.timeText = videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
-            video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
-            video_entry.videoThumbnails = this.extract_thumbnail_data(video_entry.videoId);
-            //check whether the property is available, because there can be videos without description which won't have an empty property
-            if(videoRenderer.hasOwnProperty("descriptionSnippet")){
-                video_entry.description = videoRenderer.descriptionSnippet.runs[0].text;
-            }
-            videoEntryList.push(video_entry);
+            videoEntryList.push(this.parse_video(videoRenderer, currentTime));
         })
-        return videoEntryList
+        return videoEntryList.map(video_entry => {
+          video_entry.isCreatorOnRise = true
+          return video_entry
+        })
     }
 
     static parse_normal_video_section(videoList, currentTime) {
         const videoEntryList = []
         videoList.forEach((videoRenderer) => {
             videoRenderer = videoRenderer.videoRenderer
-            let video_entry = {
-                videoId: -1,
-                title: "",
-                type: "video",
-                author: "",
-                authorId: "",
-                authorUrl: "",
-                videoThumbnails: [],
-                description: "",
-                viewCount: -1,
-                published: -1,
-                publishedText: "",
-                lengthSeconds: -1,
-                liveNow: false,
-                paid: false,
-                premium: false,
-                isUpcoming: false,
-                timeText: "",
-                isCreatorOnRise: false,
-                isVerified: false,
-                isVerifiedArtist: false
-            };
-
-            video_entry.videoId = videoRenderer.videoId;
-            video_entry.title = videoRenderer.title.runs[0].text;
-            video_entry.author = videoRenderer.longBylineText.runs[0].text;
-            video_entry.authorId = videoRenderer.ownerText.runs[0].navigationEndpoint.browseEndpoint.browseId;
-            video_entry.authorUrl = videoRenderer.longBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url;
-            video_entry.viewCount = ('viewCountText' in videoRenderer) ? this.calculate_view_count(videoRenderer.viewCountText.simpleText) : 0;
-            video_entry.publishedText = videoRenderer.publishedTimeText.simpleText;
-            video_entry.published = this.calculate_published(video_entry.publishedText, currentTime);
-            video_entry.timeText = videoRenderer.lengthText.simpleText;
-            video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
-            video_entry.videoThumbnails = this.extract_thumbnail_data(video_entry.videoId);
-            if ('ownerBadges' in videoRenderer) {
-                video_entry.isVerified = (videoRenderer.ownerBadges[0].metadataBadgeRenderer.style === 'BADGE_STYLE_TYPE_VERIFIED')
-                video_entry.isVerifiedArtist = (videoRenderer.ownerBadges[0].metadataBadgeRenderer.style === 'BADGE_STYLE_TYPE_VERIFIED_ARTIST')
-            }
-
-            //check whether the property is available, because there can be videos without description which won't have an empty property
-            if(videoRenderer.hasOwnProperty("descriptionSnippet")){
-                video_entry.description = videoRenderer.descriptionSnippet.runs[0].text;
-            }
-            videoEntryList.push(video_entry);
+            videoEntryList.push(this.parse_video(videoRenderer, currentTime));
         })
         return videoEntryList
+    }
+
+    static parse_video(videoRenderer, currentTime) {
+      let video_entry = {
+        videoId: -1,
+        title: "",
+        type: "video",
+        author: "",
+        authorId: "",
+        authorUrl: "",
+        videoThumbnails: [],
+        description: "",
+        viewCount: -1,
+        published: -1,
+        publishedText: "",
+        lengthSeconds: -1,
+        liveNow: false,
+        paid: false,
+        premium: false,
+        isUpcoming: false,
+        timeText: "",
+        isCreatorOnRise: false,
+        isVerified: false,
+        isVerifiedArtist: false,
+        isShort: false
+      };
+      video_entry.videoId = videoRenderer.videoId;
+      video_entry.title = videoRenderer.title.runs[0].text;
+      video_entry.author = videoRenderer.shortBylineText.runs[0].text;
+      video_entry.authorId = videoRenderer.shortBylineText.runs[0].navigationEndpoint.browseEndpoint.browseId;
+      video_entry.authorUrl = videoRenderer.shortBylineText.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url;
+      video_entry.viewCount = this.calculate_view_count(videoRenderer.viewCountText.simpleText);
+      video_entry.publishedText = videoRenderer.publishedTimeText.simpleText;
+      video_entry.published = this.calculate_published(video_entry.publishedText, currentTime);
+      if (videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText === 'SHORTS') {
+        const lengthData = this.parseShortsLength(videoRenderer.title.accessibility.accessibilityData.label)
+        video_entry.lengthSeconds = lengthData.lengthSeconds
+        video_entry.timeText = lengthData.timeText
+        video_entry.isShort = true
+      } else {
+        video_entry.timeText = videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
+        video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
+      }
+      video_entry.videoThumbnails = this.extract_thumbnail_data(video_entry.videoId);
+      if ('ownerBadges' in videoRenderer) {
+        video_entry.isVerified = (videoRenderer.ownerBadges[0].metadataBadgeRenderer.style === 'BADGE_STYLE_TYPE_VERIFIED')
+        video_entry.isVerifiedArtist = (videoRenderer.ownerBadges[0].metadataBadgeRenderer.style === 'BADGE_STYLE_TYPE_VERIFIED_ARTIST')
+    }
+      //check whether the property is available, because there can be videos without description which won't have an empty property
+      if(videoRenderer.hasOwnProperty("descriptionSnippet")){
+          video_entry.description = videoRenderer.descriptionSnippet.runs[0].text;
+      }
+      return video_entry
     }
 
     //calculates the length of the video in seconds as a number from the string "hh:mm:ss"
@@ -207,6 +170,20 @@ class YoutubeScraper {
             width: Width,
             height: Height
         };
+    }
+
+    static parseShortsLength(accessibilityData) {
+      let timeText = '0'
+      let lengthSeconds = 0
+      const shortsRegex = /(months?|years?|days?|hours?|weeks?) ago (\d*) (second|minute)/
+      const regexMatch = accessibilityData.match(shortsRegex)
+      lengthSeconds = parseInt(regexMatch[2])
+      timeText = '0:' + (lengthSeconds.toString().padStart(2,'0'))
+      if (regexMatch[3] == 'minute') {
+        lengthSeconds *= 60
+        timeText = '1:00'
+      }
+      return {timeText, lengthSeconds}
     }
 }
 module.exports = YoutubeScraper
