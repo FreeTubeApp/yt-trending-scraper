@@ -3,6 +3,10 @@
   "version": "2.0.1",
   "description": "Identifies the currently trending videos on YouTube and returns all trending site information about every video without accessing the YouTube API.",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "src/"
+  ],
   "scripts": {
     "test": "jest --watchAll --verbose",
     "test-ci": "jest --verbose --ci"
