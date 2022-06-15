@@ -1,5 +1,5 @@
 const axios = require("axios")
-const trendingPageBase = "https://youtube.com/feed/trending"
+const trendingPageBase = "https://www.youtube.com/feed/trending"
 const pageAdditions = {
     'music': '4gINGgt5dG1hX2NoYXJ0cw%3D%3D',
     'gaming': '4gIcGhpnYW1pbmdfY29ycHVzX21vc3RfcG9wdWxhcg%3D%3D',
