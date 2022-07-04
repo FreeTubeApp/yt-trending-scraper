@@ -175,7 +175,7 @@ class YoutubeScraper {
     static parseShortsLength(accessibilityData) {
       let timeText = '0'
       let lengthSeconds = 0
-      const shortsRegex = /(months?|years?|days?|hours?|weeks?) ago (\d*) (second|minute)/
+      const shortsRegex = /(years?|months?|weeks?|days?|hours?|minutes?|seconds?) ago (\d*) (second|minute)/
       const regexMatch = accessibilityData.match(shortsRegex)
       lengthSeconds = parseInt(regexMatch[2])
       timeText = '0:' + (lengthSeconds.toString().padStart(2,'0'))
