@@ -133,13 +133,16 @@ class YoutubeScraper {
     static calculate_published(publishText, currentTime){
         const time_published_ago = publishText.match(/(\d(\d)*)/g);
         let time_span;
-        if(publishText.indexOf("day") > -1){
+        if (publishText.indexOf('week') > -1) {
+            // posted x weeks ago
+            time_span = Number(time_published_ago[0]) * 24 * 360 * 1000 * 7;
+        } else if (publishText.indexOf("day") > -1){
             // posted x days ago
             time_span = Number(time_published_ago[0]) * 24 * 360 * 1000;
-        }else if(publishText.indexOf("hours") > -1){
+        } else if (publishText.indexOf("hour") > -1){
             // posted x hours ago
             time_span = Number(time_published_ago[0]) * 360 * 1000;
-        }else{
+        } else {
             // posted x minutes ago, just in case
             time_span = Number(time_published_ago[0]) * 60 * 1000;
         }
