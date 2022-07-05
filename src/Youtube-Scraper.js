@@ -113,10 +113,8 @@ class YoutubeScraper {
         let length_seconds = 0;
         const hours_minutes_seconds = lengthText.match(/(\d(\d)*)/g);
         // calculate the time in seconds for every entry
-        if (hours_minutes_seconds != null) {
-          for(let i = hours_minutes_seconds.length-1; i >= 0; i--){
-              length_seconds += Math.pow(60, (hours_minutes_seconds.length - i - 1)) * hours_minutes_seconds[i];
-          }
+        for(let i = hours_minutes_seconds.length-1; i >= 0; i--){
+          length_seconds += Math.pow(60, (hours_minutes_seconds.length - i - 1)) * hours_minutes_seconds[i];
         }
         return length_seconds;
     }
