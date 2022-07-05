@@ -87,7 +87,7 @@ class YoutubeScraper {
       video_entry.viewCount = this.calculate_view_count(videoRenderer.viewCountText.simpleText);
       video_entry.publishedText = videoRenderer.publishedTimeText.simpleText;
       video_entry.published = this.calculate_published(video_entry.publishedText, currentTime);
-      if (videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText === 'SHORTS') {
+      if (videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText.match(/\d/) === null) {
         const lengthData = this.parseShortsLength(videoRenderer.title.accessibility.accessibilityData.label)
         video_entry.lengthSeconds = lengthData.lengthSeconds
         video_entry.timeText = lengthData.timeText
@@ -189,10 +189,8 @@ class YoutubeScraper {
       } else {
         const numbersAndSpacesRegex = /[^0-9\s]/g
         let numbersOnly = accessibilityData.replace(numbersAndSpacesRegex, '').trim().split(' ')
-        if (numbersOnly.length >= 3) {
-          lengthSeconds = numbersOnly[numbersOnly.length - 2]
-          timeText = '0:' + (lengthSeconds.toString().padStart(2,'0'))
-        }
+        lengthSeconds = numbersOnly[numbersOnly.length - 2]
+        timeText = '0:' + (lengthSeconds.toString().padStart(2,'0'))
       }
       return {timeText, lengthSeconds}
     }
