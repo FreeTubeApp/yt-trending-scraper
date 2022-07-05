@@ -113,8 +113,10 @@ class YoutubeScraper {
         let length_seconds = 0;
         const hours_minutes_seconds = lengthText.match(/(\d(\d)*)/g);
         // calculate the time in seconds for every entry
-        for(let i = hours_minutes_seconds.length-1; i >= 0; i--){
-            length_seconds += Math.pow(60, (hours_minutes_seconds.length - i - 1)) * hours_minutes_seconds[i];
+        if (hours_minutes_seconds != null) {
+          for(let i = hours_minutes_seconds.length-1; i >= 0; i--){
+              length_seconds += Math.pow(60, (hours_minutes_seconds.length - i - 1)) * hours_minutes_seconds[i];
+          }
         }
         return length_seconds;
     }
@@ -177,11 +179,20 @@ class YoutubeScraper {
       let lengthSeconds = 0
       const shortsRegex = /(years?|months?|weeks?|days?|hours?|minutes?|seconds?) ago (\d*) (second|minute)/
       const regexMatch = accessibilityData.match(shortsRegex)
-      lengthSeconds = parseInt(regexMatch[2])
-      timeText = '0:' + (lengthSeconds.toString().padStart(2,'0'))
-      if (regexMatch[3] == 'minute') {
-        lengthSeconds *= 60
-        timeText = '1:00'
+      if (regexMatch) {
+        lengthSeconds = parseInt(regexMatch[2])
+        timeText = '0:' + (lengthSeconds.toString().padStart(2,'0'))
+        if (regexMatch[3] == 'minute') {
+          lengthSeconds *= 60
+          timeText = '1:00'
+        }
+      } else {
+        const numbersAndSpacesRegex = /[^0-9\s]/g
+        let numbersOnly = accessibilityData.replace(numbersAndSpacesRegex, '').trim().split(' ')
+        if (numbersOnly.length >= 3) {
+          lengthSeconds = numbersOnly[numbersOnly.length - 2]
+          timeText = '0:' + (lengthSeconds.toString().padStart(2,'0'))
+        }
       }
       return {timeText, lengthSeconds}
     }
