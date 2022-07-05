@@ -188,9 +188,16 @@ class YoutubeScraper {
         }
       } else {
         const numbersAndSpacesRegex = /[^0-9\s]/g
-        let numbersOnly = accessibilityData.replace(numbersAndSpacesRegex, '').trim().split(' ')
-        lengthSeconds = numbersOnly[numbersOnly.length - 2]
-        timeText = '0:' + (lengthSeconds.toString().padStart(2,'0'))
+        let numbersOnly = accessibilityData.replace(numbersAndSpacesRegex, '').trim().split(' ').filter(number => {
+          return number !== ''
+        })
+        lengthSeconds = parseInt(numbersOnly[numbersOnly.length - 2])
+        if (lengthSeconds === 1) { // assume it's a minute and not a second
+          lengthSeconds *= 60
+          timeText = '1:00'
+        } else {
+          timeText = '0:' + (lengthSeconds.toString().padStart(2,'0'))
+        }
       }
       return {timeText, lengthSeconds}
     }
