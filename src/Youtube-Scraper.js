@@ -90,7 +90,7 @@ class YoutubeScraper {
       if (/\d/.test(videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText)) {
         video_entry.timeText = videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
         video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
-      } else {
+      } else { // "SHORTS" text can be localized so if there's no number in duration, assume it's a short
         const lengthData = this.parseShortsLength(videoRenderer.title.accessibility.accessibilityData.label)
         video_entry.lengthSeconds = lengthData.lengthSeconds
         video_entry.timeText = lengthData.timeText
