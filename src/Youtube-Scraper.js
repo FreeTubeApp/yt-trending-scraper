@@ -173,12 +173,15 @@ class YoutubeScraper {
     }
 
     static parseShortsLength(accessibilityData) {
+      // "accessibilityData format: {Video Title} {x} weeks ago {y} seconds {z} views - play Short
+      // (text is different depending on location, ex: german ip = german text)
       let timeText = '0'
       let lengthSeconds = 0
       const numbersAndSpacesRegex = /[^0-9\s]/g
       let numbersOnly = accessibilityData.replace(numbersAndSpacesRegex, '').trim().split(' ').filter(number => {
         return number !== ''
       })
+      // only care about seconds/minute, skip over view count
       lengthSeconds = parseInt(numbersOnly[numbersOnly.length - 2])
       if (lengthSeconds === 1) { // assume it's a minute and not a second
         lengthSeconds *= 60
