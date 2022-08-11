@@ -87,14 +87,14 @@ class YoutubeScraper {
       video_entry.viewCount = this.calculate_view_count(videoRenderer.viewCountText.simpleText);
       video_entry.publishedText = videoRenderer.publishedTimeText.simpleText;
       video_entry.published = this.calculate_published(video_entry.publishedText, currentTime);
-      if (videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText.match(/\d/) === null) {
+      if (/\d/.test(videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText)) {
+        video_entry.timeText = videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
+        video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
+      } else {
         const lengthData = this.parseShortsLength(videoRenderer.title.accessibility.accessibilityData.label)
         video_entry.lengthSeconds = lengthData.lengthSeconds
         video_entry.timeText = lengthData.timeText
         video_entry.isShort = true
-      } else {
-        video_entry.timeText = videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
-        video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
       }
       video_entry.videoThumbnails = this.extract_thumbnail_data(video_entry.videoId);
       if ('ownerBadges' in videoRenderer) {
