@@ -87,14 +87,14 @@ class YoutubeScraper {
       video_entry.viewCount = this.calculate_view_count(videoRenderer.viewCountText.simpleText);
       video_entry.publishedText = videoRenderer.publishedTimeText.simpleText;
       video_entry.published = this.calculate_published(video_entry.publishedText, currentTime);
-      if (videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText === 'SHORTS') {
+      if (/\d/.test(videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText)) {
+        video_entry.timeText = videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
+        video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
+      } else { // "SHORTS" text can be localized so if there's no number in duration, assume it's a short
         const lengthData = this.parseShortsLength(videoRenderer.title.accessibility.accessibilityData.label)
         video_entry.lengthSeconds = lengthData.lengthSeconds
         video_entry.timeText = lengthData.timeText
         video_entry.isShort = true
-      } else {
-        video_entry.timeText = videoRenderer.thumbnailOverlays[0].thumbnailOverlayTimeStatusRenderer.text.simpleText;
-        video_entry.lengthSeconds = this.calculate_length_in_seconds(video_entry.timeText);
       }
       video_entry.videoThumbnails = this.extract_thumbnail_data(video_entry.videoId);
       if ('ownerBadges' in videoRenderer) {
@@ -114,7 +114,7 @@ class YoutubeScraper {
         const hours_minutes_seconds = lengthText.match(/(\d(\d)*)/g);
         // calculate the time in seconds for every entry
         for(let i = hours_minutes_seconds.length-1; i >= 0; i--){
-            length_seconds += Math.pow(60, (hours_minutes_seconds.length - i - 1)) * hours_minutes_seconds[i];
+          length_seconds += Math.pow(60, (hours_minutes_seconds.length - i - 1)) * hours_minutes_seconds[i];
         }
         return length_seconds;
     }
@@ -173,15 +173,21 @@ class YoutubeScraper {
     }
 
     static parseShortsLength(accessibilityData) {
+      // "accessibilityData format: {Video Title} {x} weeks ago {y} seconds {z} views - play Short
+      // (text is different depending on location, ex: german ip = german text)
       let timeText = '0'
       let lengthSeconds = 0
-      const shortsRegex = /(months?|years?|days?|hours?|weeks?) ago (\d*) (second|minute)/
-      const regexMatch = accessibilityData.match(shortsRegex)
-      lengthSeconds = parseInt(regexMatch[2])
-      timeText = '0:' + (lengthSeconds.toString().padStart(2,'0'))
-      if (regexMatch[3] == 'minute') {
+      const numbersAndSpacesRegex = /[^0-9\s]/g
+      let numbersOnly = accessibilityData.replace(numbersAndSpacesRegex, '').trim().split(' ').filter(number => {
+        return number !== ''
+      })
+      // only care about seconds/minute, skip over view count
+      lengthSeconds = parseInt(numbersOnly[numbersOnly.length - 2])
+      if (lengthSeconds === 1) { // assume it's a minute and not a second
         lengthSeconds *= 60
         timeText = '1:00'
+      } else {
+        timeText = '0:' + (lengthSeconds.toString().padStart(2,'0'))
       }
       return {timeText, lengthSeconds}
     }
