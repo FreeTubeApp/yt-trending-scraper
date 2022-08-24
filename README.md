@@ -1,5 +1,5 @@
 # YouTube Trending Videos Scraper NodeJS Documentation
-This NodeJS library can scrape all available trending pages of YouTube without any API usage. It is developed for and tailored towards easy usage in the [FreeTube](https://github.com/FreeTubeApp/FreeTube-Vue) rewrite but can be used with any other project as well.
+This NodeJS library can scrape all available trending pages of YouTube without any API usage. It is developed for and tailored towards easy usage in the [FreeTube](https://github.com/FreeTubeApp/FreeTube) rewrite but can be used with any other project as well.
 
 Therefore, this library does not require any API keys, with the attached maximum quotas, but instead might take longer to receive the required data.
 
@@ -13,7 +13,7 @@ If this library should not work at some point, please create an issue and let me
 `const ytrend = require("yt-trending-scraper")`
 
 ## API
-**scrape_trending_page(_parameters_)**
+**scrapeTrendingPage(_parameters_)**
 Returns a list of objects containing all the information of the trending videos.
 
 The parameters object can contain the following options:
@@ -47,7 +47,7 @@ const parameters = {
     page: 'music'
 }
 
-ytrend.scrape_trending_page(parameters).then((data) =>{
+ytrend.scrapeTrendingPage(parameters).then((data) =>{
     console.log(data);
 }).catch((error)=>{
     console.log(error);
