@@ -158,12 +158,12 @@ class HtmlParser {
     ]
   }
 
-  static createThumbnailDictionary(Quality, Url, Width, Height) {
+  static createThumbnailDictionary(quality, url, width, height) {
     return {
-      quality: Quality,
-      url: Url,
-      width: Width,
-      height: Height
+      quality: quality,
+      url: url,
+      width: width,
+      height: height
     }
   }
 
