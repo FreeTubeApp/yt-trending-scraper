@@ -39,8 +39,6 @@ class HtmlParser {
     } else if ('expandedShelfContentsRenderer' in videoList) {
       // normal video section
       return this.parseNormalVideoSection(videoList.expandedShelfContentsRenderer.items, currentTime)
-    } else if ('richItemRenderer' in videoList) {
-      return this.parseHorizontalVideoSection()
     }
     return []
   }
