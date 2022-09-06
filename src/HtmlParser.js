@@ -15,9 +15,13 @@ class HtmlParser {
   }
 
   static deduplicateVideoList(videos) {
-    const uniqueIds = {}
+    const uniqueIds = new Set()
     return videos.filter((video) => {
-      return video.videoId in uniqueIds ? false : (uniqueIds[video.videoId] = true)
+      if (!uniqueIds.has(video.videoId)) {
+        uniqueIds.add(video.videoId)
+        return true
+      }
+      return false
     })
   }
 
