@@ -16,7 +16,7 @@ class HtmlParser {
     let videos = []
     const currentTime = Date.now()
     contentArrayJSON.forEach((data) => {
-      if ('shelfRenderer' in data) {
+      if ('itemSectionRenderer' in data) {
         const videoList = this.buildApiOutput(data.itemSectionRenderer.contents[0].shelfRenderer.content, currentTime, parseCreatorOnRise)
         videos = [...videos, ...videoList]
       } else if ('richItemRenderer' in data) {
