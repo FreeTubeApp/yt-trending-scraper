@@ -1,15 +1,32 @@
 class HtmlParser {
   static parseNewHtml(htmlData, parseCreatorOnRise) {
     // matches the special setup of the video elements
-    let jsonContent = '{' + htmlData.match(/"sectionListRenderer".+?(},"tab)/)[0]
-    // remove the last chars in order to make it valid JSON
-    jsonContent = jsonContent.substring(0, jsonContent.length - 5)
-    const contentArrayJSON = JSON.parse(jsonContent).sectionListRenderer.contents
+    const jsonDataRegex = /ytInitialData = (.+)?(;<\/script>)/
+    const jsonObject = JSON.parse(htmlData.match(jsonDataRegex)[1])
+    const jsonContent = jsonObject.contents.twoColumnBrowseResultsRenderer.tabs
+      .find(e => e.tabRenderer.selected)
+      .tabRenderer
+      .content
+    let contentArrayJSON
+    if ('sectionListRenderer' in jsonContent) {
+      contentArrayJSON = jsonContent.sectionListRenderer.contents
+    } else if ('richGridRenderer' in jsonContent) {
+      contentArrayJSON = jsonContent.richGridRenderer.contents
+    }
     let videos = []
     const currentTime = Date.now()
     contentArrayJSON.forEach((data) => {
-      const videoList = this.buildApiOutput(data.itemSectionRenderer.contents[0].shelfRenderer.content, currentTime, parseCreatorOnRise)
-      videos = [...videos, ...videoList]
+      if ('shelfRenderer' in data) {
+        const videoList = this.buildApiOutput(data.itemSectionRenderer.contents[0].shelfRenderer.content, currentTime, parseCreatorOnRise)
+        videos = [...videos, ...videoList]
+      } else if ('richItemRenderer' in data) {
+        videos.push(
+          this.parseRichItemRenderer(data, currentTime)
+        )
+      } else if ('richSectionRenderer' in data) {
+        const videoList = this.parseRichSectionRenderer(data, currentTime)
+        videos = [...videos, ...videoList]
+      }
     })
     return videos
   }
@@ -22,6 +39,8 @@ class HtmlParser {
     } else if ('expandedShelfContentsRenderer' in videoList) {
       // normal video section
       return this.parseNormalVideoSection(videoList.expandedShelfContentsRenderer.items, currentTime)
+    } else if ('richItemRenderer' in videoList) {
+      return this.parseHorizontalVideoSection()
     }
     return []
   }
@@ -45,6 +64,16 @@ class HtmlParser {
       videoEntryList.push(this.parseVideo(videoRenderer, currentTime))
     })
     return videoEntryList
+  }
+
+  static parseRichItemRenderer(data, currentTime) {
+    return this.parseVideo(data.richItemRenderer.content.videoRenderer, currentTime)
+  }
+
+  static parseRichSectionRenderer(data, currentTime) {
+    return data.richSectionRenderer.content.richShelfRenderer.contents.map(rsr => {
+      return this.parseRichItemRenderer(rsr, currentTime)
+    })
   }
 
   static parseVideo(videoRenderer, currentTime) {
