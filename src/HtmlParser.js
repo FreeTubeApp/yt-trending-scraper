@@ -11,7 +11,18 @@ class HtmlParser {
       const videoList = this.buildApiOutput(data.itemSectionRenderer.contents[0].shelfRenderer.content, currentTime, parseCreatorOnRise)
       videos = [...videos, ...videoList]
     })
-    return videos
+    return this.deduplicateVideoList(videos)
+  }
+
+  static deduplicateVideoList(videos) {
+    const uniqueIds = new Set()
+    return videos.filter((video) => {
+      if (!uniqueIds.has(video.videoId)) {
+        uniqueIds.add(video.videoId)
+        return true
+      }
+      return false
+    })
   }
 
   // access the one video container and build and object with all the data required
