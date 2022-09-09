@@ -1,4 +1,4 @@
-declare module "yt-trending-scraper" {
+declare module "@freetubeapp/yt-trending-scraper" {
   interface Thumbnail {
     quality: string
     url: string
@@ -36,4 +36,5 @@ declare module "yt-trending-scraper" {
   class TrendingScraper {
     static scrapeTrendingPage(payload: TrendingPayload) : Promise<Video[]>
   }
+  export default TrendingScraper
 }
