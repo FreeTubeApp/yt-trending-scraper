@@ -1,11 +1,12 @@
 {
   "name": "@freetube/yt-trending-scraper",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Identifies the currently trending videos on YouTube and returns all trending site information about every video without accessing the YouTube API.",
   "main": "index.js",
   "files": [
     "index.js",
-    "src/"
+    "src/",
+    "index.d.ts"
   ],
   "scripts": {
     "test": "jest --watchAll --verbose --coverage",
@@ -50,5 +51,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
     "jest": "^28.1.3",
-    "prettier": "^2.7.1"  }
+    "prettier": "^2.7.1"
+  },
+  "types": "index.d.ts"
 }

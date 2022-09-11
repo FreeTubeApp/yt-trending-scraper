@@ -1,5 +1,5 @@
 # YouTube Trending Videos Scraper NodeJS Documentation
-This NodeJS library can scrape all available trending pages of YouTube without any API usage. It is developed for and tailored towards easy usage in the [FreeTube](https://github.com/FreeTubeApp/FreeTube) rewrite but can be used with any other project as well.
+This NodeJS library can scrape all available trending pages of YouTube without any API usage. It is developed for and tailored towards easy usage in [FreeTube](https://github.com/FreeTubeApp/FreeTube) but can be used with any other project as well.
 
 Therefore, this library does not require any API keys, with the attached maximum quotas, but instead might take longer to receive the required data.
 
@@ -7,10 +7,10 @@ The library works as long as YouTube keeps its web page layout the same. Therefo
 If this library should not work at some point, please create an issue and let me know so that I can take a look into it. Pull requests are also welcomed in this case.
 
 ## Installation
-`npm install yt-trending-scraper`
+`npm install @freetubeapp/yt-trending-scraper`
 
 ## Usage
-`const ytrend = require("yt-trending-scraper")`
+`const ytrend = require("@freetubeapp/yt-trending-scraper")`
 
 ## API
 **scrapeTrendingPage(_parameters_)**
@@ -50,7 +50,7 @@ const parameters = {
 ytrend.scrapeTrendingPage(parameters).then((data) =>{
     console.log(data);
 }).catch((error)=>{
-    console.log(error);
+    console.error(error);
 });
 
 // The data is a list of objects containing the following attributes:
@@ -74,7 +74,8 @@ ytrend.scrapeTrendingPage(parameters).then((data) =>{
     isUpcoming:         false,
     isCreatorOnRise:    Boolean, // indicates whether the video is part of a creator on the rise
     isVerified:         Boolean,
-    isVerifiedArist:    Boolean
+    isVerifiedArist:    Boolean,
+    isShort:            Boolean
 }
 
 // The thumbnail objects:
