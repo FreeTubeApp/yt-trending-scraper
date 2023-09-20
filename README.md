@@ -1,6 +1,5 @@
 # No Longer Maintained
-This repo is no longer used by FreeTube so we will not be maintaining it anymore.
-FreeTube will be using YouTube.js which can be found on [GitHub](https://github.com/LuanRT/YouTube.js) and [npm](https://www.npmjs.com/package/youtubei.js). You can keep using this package while it is still working but we recommend that you switch to youtubei.js or another alternative.
+This repository is no longer maintained. The functionality of this project has been merged into [YouTube.js](https://github.com/LuanRT/YouTube.js). We highly recommend switching to that package in order to have the latest functionality. We cannot promise stability if you continue to use this package as is.
 
 # YouTube Trending Videos Scraper NodeJS Documentation
 This NodeJS library can scrape all available trending pages of YouTube without any API usage. It is developed for and tailored towards easy usage in [FreeTube](https://github.com/FreeTubeApp/FreeTube) but can be used with any other project as well.
